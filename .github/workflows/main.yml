@@ -39,7 +39,8 @@ jobs:
     # Be sure 'cpptesttrace' is available on $PATH.
     - name: Build project
       run: cpptesttrace make clean all
-    
+      working-directory: ./FlowAnalysis
+      
     # Runs code analysis with C/C++test.
     - name: Run C/C++test
       uses: parasoft/run-cpptest-action@2.0.1
