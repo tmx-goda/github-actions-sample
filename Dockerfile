@@ -20,6 +20,7 @@ RUN apt-get update && \
       bzip2 \
       sudo \
       git \
+      curl \
       language-pack-ja-base \
       language-pack-ja \
       wget && \
@@ -41,6 +42,7 @@ RUN update-locale LANG=ja_JP.UTF-8
 # ユーザーを追加
 ARG DOCKER_UID=1000
 ARG DOCKER_USER=cpptest
-RUN useradd -m -u ${DOCKER_UID} ${DOCKER_USER}
+RUN useradd -m -u ${DOCKER_UID} ${DOCKER_USER} -G sudo,root
+RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 ENV LC_ALL=ja_JP.UTF-8
