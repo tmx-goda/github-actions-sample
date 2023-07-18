@@ -10,8 +10,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 # ツールチェーンとC++testをPATHに設定する
 ENV CPPTEST_MODULE=parasoft_cpptest_professional-2022.2.0-linux.x86_64.tar.gz
 ENV CPPTEST_INS_DIR="/opt/app/cpptest"
-ENV TOOL_CHAIN_DIR="/opt/app/gcc-arm-none-eabi-9-2019-q4-major/bin"
-ENV PATH "${CPPTEST_INS_DIR}:${CPPTEST_INS_DIR}/bin:${TOOL_CHAIN_DIR}:$PATH"
+ENV PATH "${CPPTEST_INS_DIR}:${CPPTEST_INS_DIR}/bin:$PATH"
 
 # 一般的なツール群のインストール
 RUN apt-get update && \
@@ -19,16 +18,12 @@ RUN apt-get update && \
     apt-get install -y \
       build-essential \
       bzip2 \
-      cmake \
       sudo \
       git \
       language-pack-ja-base \
       language-pack-ja \
-      qemu-user-static \
       wget && \
     apt-get clean
-
-RUN wget -qO- https://developer.arm.com/-/media/Files/downloads/gnu-rm/9-2019q4/gcc-arm-none-eabi-9-2019-q4-major-x86_64-linux.tar.bz2 | tar -xj
 
 # C++testのインストール
 COPY ${CPPTEST_MODULE} /opt/app

@@ -17,14 +17,14 @@ void storePersonToFile(Person *person, FILE* file)
     fclose(file);
 }
 
-void copyPersonToFile(int32_t id, FILE* file)
+void copyPersonToFile(int id, FILE* file)
 {
     Person* p = retrievePersonFromDB(id);
     storePersonToFile(p, file);
     free(p);
 }
 
-Person* createPerson(int32_t id, char* name, char* ref)
+Person* createPerson(int id, char* name, char* ref)
 {
     Person* p = malloc(sizeof(Person));
     p->name = name;

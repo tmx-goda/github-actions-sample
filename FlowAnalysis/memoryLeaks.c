@@ -11,7 +11,7 @@ void printPersonInfo(FILE* file)
 {
     char *c;
     char buf[100];
-    int32_t id = 0;
+    int id = 0;
     while(1) {
         c = fgets(buf, 100, file);
         if (c!=NULL) {
@@ -31,9 +31,9 @@ void printPersonInfo(FILE* file)
 
 void simpleLeakInCycle()
 {
-    int32_t count = 0;
-    int32_t LOOPS = 100;
-    int32_t MAXSIZE = 100;
+    int count = 0;
+    int LOOPS = 100;
+    int MAXSIZE = 100;
     char *pointer = NULL;
 
     for(count=0; count < LOOPS; count++) {
