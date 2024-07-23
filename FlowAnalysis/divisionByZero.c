@@ -59,3 +59,7 @@ int main()
 int addval(int a, int b){
     return a+b;
 }
+
+int subval(int a, int b){
+    return a-b;
+}
