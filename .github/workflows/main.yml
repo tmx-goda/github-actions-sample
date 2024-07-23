@@ -54,7 +54,7 @@ jobs:
         testConfig: 'builtin://MISRA C 2023 (MISRA C 2012)'
         reportFormat: xml,html,sarif
         input: './FlowAnalysis/cpptestscan.bdf'
-        comp: gcc_11-64
+        comp: 'gcc_11-64'
         commandLinePattern: '${cpptestcli} -config "${testConfig}" -input "${input}" -compiler "${comp}" ${additionalParams}'
     
     # Uploads analysis results in the SARIF format, so that they are displayed as GitHub code scanning alerts.
