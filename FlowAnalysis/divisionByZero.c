@@ -63,3 +63,7 @@ int addval(int a, int b){
 int subval(int a, int b){
     return a-b;
 }
+
+int mulval(int a, int b){
+    return a*b;
+}
