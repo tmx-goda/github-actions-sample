@@ -51,7 +51,7 @@ jobs:
       with:
         # C/C++test will use options from 'config.properties'.
         additionalParams: -localsettings config.properties
-        testConfig: 'builtin://MISRA C 2012'
+        testConfig: 'builtin://MISRA C 2023 (MISRA C 2012)'
         reportFormat: xml,html,sarif
         input: './FlowAnalysis/cpptestscan.bdf'
         commandLinePattern: '${cpptestcli} -config "${testConfig}" -input "${input}" ${additionalParams}'
