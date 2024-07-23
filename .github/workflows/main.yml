@@ -54,7 +54,7 @@ jobs:
         testConfig: 'builtin://MISRA C 2012'
         reportFormat: xml,html,sarif
         input: './FlowAnalysis/cpptestscan.bdf'
-        commandLinePattern: '${cpptestcli} -data ../workspace -config "${testConfig}" -report "${reportDir}" -bdf "${input}" ${additionalParams}'
+        commandLinePattern: '${cpptestcli} -config "${testConfig}" -input "${input}" ${additionalParams}'
     
     # Uploads analysis results in the SARIF format, so that they are displayed as GitHub code scanning alerts.
     - name: Upload results (SARIF)
