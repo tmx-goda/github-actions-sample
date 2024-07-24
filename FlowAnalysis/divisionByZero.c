@@ -67,3 +67,7 @@ int subval(int a, int b){
 int mulval(int a, int b){
     return a*b;
 }
+
+int util_func(int a, int b){
+    return a+b;
+}
