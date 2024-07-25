@@ -1,0 +1,71 @@
+
+# This is a basic workflow to help you get started with the Run C/C++test action for Make-based project.
+name: C/C++test with Make
+
+on:
+  # Triggers the workflow on push or pull request events but only for the master (main) branch.
+#  push:
+#    branches: [ master, main ]
+  schedule:
+    - cron: '10 * * * 1-5'
+  # Allows you to run this workflow manually from the Actions tab.
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel.
+jobs:
+  run-cpptest-make:
+    name: Scheduled analyze project with C/C++test
+
+    # Specifies the type of runner that the job will run on.
+    runs-on: self-hosted
+
+    # Specifies required permissions for upload-sarif action
+    permissions:
+      # required for all workflows
+      security-events: write
+      # only required for workflows in private repositories
+      actions: read
+      contents: read
+
+    # Steps represent a sequence of tasks that will be executed as part of the job.
+    steps:
+
+    # Set a PATH in this environment.
+    - name: Set a path
+      run: echo "/home/godagoda/Downloads/parasoft_cpptest_standard-2023.2.1-linux.x86_64/cpptest:/home/godagoda/Downloads/parasoft_cpptest_standard-2023.2.1-linux.x86_64/cpptest/bin" >> $GITHUB_PATH
+      
+    # Checks out your repository under $GITHUB_WORKSPACE, so that your job can access it.
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    # Builds your Make project using 'cpptesttrace' to collect input data for code analysis.
+    # Be sure 'cpptesttrace' is available on $PATH.
+    - name: Build project
+      run: cpptesttrace make clean all
+      working-directory: ./FlowAnalysis
+      
+    # Runs code analysis with C/C++test.
+    - name: Run C/C++test
+      uses: parasoft/run-cpptest-action@2.0.1
+      with:
+        # C/C++test will use options from 'config.properties'.
+        additionalParams: -localsettings config.properties
+        testConfig: 'builtin://CWE Top 25 + On the Cusp 2022'
+        reportFormat: xml,html,sarif
+        input: './FlowAnalysis/cpptestscan.bdf'
+        commandLinePattern: '${cpptestcli} -config "${testConfig}" -input "${input}" -compiler gcc_11-64 ${additionalParams}'
+    
+    # Uploads analysis results in the SARIF format, so that they are displayed as GitHub code scanning alerts.
+    - name: Upload results (SARIF)
+      if: always()
+      uses: github/codeql-action/upload-sarif@v2
+      with:
+        sarif_file: reports/report.sarif
+    
+    # Uploads an archive that includes all report files (.xml, .html, .sarif).
+    - name: Archive reports
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: CpptestReports
+        path: reports/*.*
